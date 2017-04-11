@@ -1,27 +1,29 @@
 
-export const selectCard = (card) => {
-    console.log("You clicked on card: ", card.title);
+export const selectCard = (cards,id) => {
+    console.log("You clicked on card: ", cards.length,id);
+    var obj = [];
+    cards.map((card) => {
+    	if(card.id == id){
+	    	obj.push({
+	        	id: card.id,
+	        	active: !card.active,
+	            title: card.title,
+	            like: card.like,
+	            dislike: card.dislike,
+	            bookmark: card.bookmark,
+	            description: card.description,
+	            thumbnail:card.thumbnail
+	        }); 
+    	}else{
+	    	obj.push(card); 
+    	}
+    });
     return {
         type: 'CARD_SELECTED',
-        payload: card
+        payload: obj
     }
 };
 
-export const likeSelectedCard = (card) => {
-    console.log("You clicked on card: ", card.title);
-    return {
-        type: 'LIKE_CARD_SELECTED',
-        payload: {
-        	id: card.id,
-            title: card.title,
-            like: card.like+1,
-            dislike: card.dislike,
-            bookmark: card.bookmark,
-            description: card.description,
-            thumbnail:card.thumbnail
-        }
-    }
-};
 
 export const likeCard = (cards,id) => {
     console.log("You clicked on card: ", cards.length,id);
@@ -30,6 +32,7 @@ export const likeCard = (cards,id) => {
     	if(card.id == id){
 	    	obj.push({
 	        	id: card.id,
+	        	active: card.active,
 	            title: card.title,
 	            like: card.like+1,
 	            dislike: card.dislike,
@@ -54,6 +57,7 @@ export const dislikeCard = (cards,id) => {
     	if(card.id == id){
 	    	obj.push({
 	        	id: card.id,
+	        	active: card.active,
 	            title: card.title,
 	            like: card.like,
 	            dislike: card.dislike+1,
@@ -78,6 +82,7 @@ export const bookmarkCard = (cards,id) => {
     	if(card.id == id){
 	    	obj.push({
 	        	id: card.id,
+	        	active: card.active,
 	            title: card.title,
 	            like: card.like,
 	            dislike: card.dislike,
@@ -95,38 +100,6 @@ export const bookmarkCard = (cards,id) => {
     }
 };
 
-export const dislikeSelectedCard = (card) => {
-    console.log("You clicked on card: ", card.title);
-    return {
-        type: 'DISLIKE_CARD_SELECTED',
-        payload: {
-        	id: card.id,
-            title: card.title,
-            like: card.like,
-            dislike: card.dislike+1,
-            bookmark: card.bookmark,
-            description: card.description,
-            thumbnail:card.thumbnail
-        }
-    }
-};
-
-export const bookmarkSelectedCard = (card) => {
-    console.log("You clicked on card: ", card.title);
-    return {
-        type: 'BOOKMARK_CARD_SELECTED',
-        payload: {
-        	id: card.id,
-            title: card.title,
-            like: card.like,
-            dislike: card.dislike,
-            bookmark: !card.bookmark,
-            description: card.description,
-            thumbnail:card.thumbnail
-        }
-    }
-};
-
 export const goBack = (cards,selectedCard) => {
     console.log("You clicked on card: ", cards.length,selectedCard.id);
     var obj = [];
@@ -134,6 +107,7 @@ export const goBack = (cards,selectedCard) => {
     	if(card.id == selectedCard.id){
 	    	obj.push({
 	        	id: selectedCard.id,
+	        	active: !selectedCard.active,
 	            title: selectedCard.title,
 	            like: selectedCard.like,
 	            dislike: selectedCard.dislike,

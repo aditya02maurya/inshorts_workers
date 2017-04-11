@@ -8,8 +8,8 @@ import ActiveCardReducer from './reducer-active-card';
  * */
 
 const allReducers = combineReducers({
-    cards: CardReducer,
-    activeCard: ActiveCardReducer
+    cards: CardReducer
+    //activeCard: ActiveCardReducer
 });
 
 export default allReducers

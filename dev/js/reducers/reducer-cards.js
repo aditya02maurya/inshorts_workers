@@ -5,6 +5,9 @@
 export default function (state = null, action) {
     console.log("action",action);
     switch (action.type) {
+        case 'CARD_SELECTED':
+            return action.payload;
+            break;
         case 'LIKE':
             return action.payload;
             break;
@@ -22,6 +25,7 @@ export default function (state = null, action) {
     return [
         {
             id: 1,
+            active : false,
             title: "Bucky",
             like: 0,
             dislike: 0,
@@ -31,6 +35,7 @@ export default function (state = null, action) {
         },
         {
             id: 2,
+            active : false,
             title: "Joby",
             like: 0,
             dislike: 0,
@@ -40,6 +45,7 @@ export default function (state = null, action) {
         },
         {
             id: 3,
+            active : false,
             title: "Madison",
             like: 0,
             dislike: 0,

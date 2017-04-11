@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {likeSelectedCard} from '../actions/index'
-import {dislikeSelectedCard} from '../actions/index'
-import {bookmarkSelectedCard} from '../actions/index'
+import {likeCard} from '../actions/index'
+import {dislikeCard} from '../actions/index'
+import {bookmarkCard} from '../actions/index'
 import {goBack} from '../actions/index'
 require('../../scss/style.scss');
 
@@ -13,6 +13,16 @@ require('../../scss/style.scss');
 
 class CardDetail extends Component {
     render() {
+        var flag = false;
+        var index = 0;
+        var CARD = null;
+        this.props.cards.map((card) => {
+            if(card.active){
+                flag = card.active;
+                index = card.id-1;
+                CARD = card;
+            }
+        });
         console.log(this.props);
         var cardStyle= {
                  height:400,
@@ -26,28 +36,28 @@ class CardDetail extends Component {
 
               };
 
-        if (!this.props.card) {
+        if (!CARD) {
             return (
                 <div className="card" style={cardStyle}>
                     <h4><b>John Doe</b></h4> 
                 </div>
             );
         }
-        {console.log("******************card in",this.props.card)}
+        {console.log("******************card in",CARD)}
         return (
-            <div className="card" style={cardStyle} key={this.props.card.id}>
-                <img src={this.props.card.thumbnail} alt="Avatar" style={{width:"100%"}}/>
-                <h4><b>{this.props.card.title}</b></h4> 
-                <p>{this.props.card.description}</p> 
-                <div id="menu">
-                    <button onClick={() => this.props.likeSelectedCard(this.props.card)}>Like: {this.props.card.like}</button>
-                    <button onClick={() => this.props.dislikeSelectedCard(this.props.card)}>    Dislike: {this.props.card.dislike}</button>
-                    <button onClick={() => this.props.bookmarkSelectedCard(this.props.card)}>    Bookmark: {''+this.props.card.bookmark}</button>
+                <div className="card" style={cardStyle} key={CARD.id}>
+                    <img src={CARD.thumbnail} alt="Avatar" style={{width:"100%"}}/>
+                    <h4><b>{CARD.title}</b></h4> 
+                    <p>{CARD.description}</p> 
+                    <div id="menu">
+                        <button onClick={() => this.props.likeCard(this.props.cards,CARD.id)}>Like: {CARD.like}</button>
+                        <button onClick={() => this.props.dislikeCard(this.props.cards,CARD.id)}>    Dislike: {CARD.dislike}</button>
+                        <button onClick={() => this.props.bookmarkCard(this.props.cards,CARD.id)}>    Bookmark: {''+CARD.bookmark}</button>
+                    </div>
+                    <button key={CARD.id} onClick={() => this.props.goBack(this.props.cards,CARD)}>Back</button>
                 </div>
-                <button key={this.props.card.id} onClick={() => this.props.goBack(this.props.cards,this.props.card)}>Back</button>
-            </div>
-        );
-    }
+            );
+        }
 }
 
 
@@ -55,16 +65,16 @@ class CardDetail extends Component {
 function mapStateToProps(state) {
     console.log("state in",state)
     return {
-        cards: state.cards,
-        card: state.activeCard
+        cards: state.cards
+        // card: state.activeCard
     };
 }
 
 function matchDispatchToProps(dispatch){
     return bindActionCreators({
-        likeSelectedCard: likeSelectedCard,
-        dislikeSelectedCard: dislikeSelectedCard,
-        bookmarkSelectedCard: bookmarkSelectedCard,
+        likeCard: likeCard,
+        dislikeCard: dislikeCard,
+        bookmarkCard: bookmarkCard,
         goBack: goBack
     }, dispatch);
 }

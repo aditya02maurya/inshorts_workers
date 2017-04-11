@@ -31,7 +31,7 @@ class CardList extends Component {
                 >
                 {console.log("card",card)}
                 <div className="card" style={cardStyle}>
-                    <img onClick={() => this.props.selectCard(card)} src={card.thumbnail} alt="Avatar" style={{width:"100%"}}/> 
+                    <img onClick={() => this.props.selectCard(this.props.cards,card.id)} src={card.thumbnail} alt="Avatar" style={{width:"100%"}}/> 
                     <h4><b>{card.title}</b></h4> 
                     <p>{card.description}</p> 
                     <div id="menu">
@@ -51,7 +51,7 @@ class CardList extends Component {
             <div 
                 id = "menu"
             >
-                {console.log("card is",this.props.card)}
+                // {console.log("card is",this.props.card)}
                 <CardDetail />
             
             </div>
@@ -59,7 +59,13 @@ class CardList extends Component {
     }
 
     render() {
-        if(this.props.card){
+        var flag = false;
+        this.props.cards.map((card) => {
+            if(card.active){
+                flag = card.active;
+            }
+        });
+        if(flag){
             return (
                 <div>
                     {this.renderElement()}
@@ -85,8 +91,8 @@ class CardList extends Component {
 function mapStateToProps(state) {
     console.log("this.state",state);
     return {
-        cards: state.cards,
-        card: state.activeCard
+        cards: state.cards
+        // card: state.activeCard
     };
 }
 
